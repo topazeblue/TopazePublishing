@@ -13,7 +13,7 @@ FORMULALIB -- provides the Formulas object
 - v2.2.1: __getitem__, to_desmos, eval
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
-:canonicurl:    TBD
+:canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/src/formulalib.py
 """
 __VERSION__ = "2.1.1"
 __DATE__ = "16/Oct/2022"

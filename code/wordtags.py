@@ -6,7 +6,7 @@ WordTags -- OpenXML tags to use with Markdown / pandoc
 - v2.0: added exec, and filter functionality (to the instantiated object only)
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
-:canonicurl:    TBD
+:canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/wordtags.py
 """
 __VERSION__ = "2.0"
 __DATE__ = "13/Oct/2022"

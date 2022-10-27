@@ -11,7 +11,7 @@ CONVERTLIB -- conversion lib for markdown documents
 - v1.3.3: ttags
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
-:canonicurl:    TBD
+:canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/convertlib.py
 """
 __VERSION__ = "1.3.3"
 __DATE__ = "21/Oct/2022"

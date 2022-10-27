@@ -13,7 +13,7 @@ FLS - File Load Save (simple wrappers for loading and saving data)
 - v1.1.1: copyright notice & canonic URL
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
-:canonicurl:    TBD
+:canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/fls.py
 """
 __VERSION__ = "1.1.1"
 __DATE__ = "12/Oct/2022"

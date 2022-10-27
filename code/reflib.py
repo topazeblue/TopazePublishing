@@ -4,7 +4,7 @@ dealing with references
 :bibtex:        class for importing bibtex citations
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
-:canonicurl:    TBD
+:canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/reflib.py
 """
 __VERSION__ = "1.0"
 __DATE__ = "12/Oct/2022"

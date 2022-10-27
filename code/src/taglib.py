@@ -6,7 +6,7 @@ TagLib - Simple Tag management
 - v0.9: basic functionality
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
-:canonicurl:    TBD
+:canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/src/taglib.py
 """
 __VERSION__ = "0.9"
 __DATE__ = "13/Oct/2022"
