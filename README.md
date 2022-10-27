@@ -26,7 +26,7 @@ Other
 
 ### Execution
 
-To create the book, run the Jupyter notebook `Convert.py` or execute the `run` script in the root directory (Jupyter is the safer option).
+To create the book, run the Jupyter notebook `Convert.py`.
 
 ## Copyright
 
