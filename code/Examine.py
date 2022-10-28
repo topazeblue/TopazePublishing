@@ -79,9 +79,9 @@ print("-------------")
 for k in COLLATED.keys():
     print(f"- {k}")
 
-# ## Collation item `TestPaper`
+# ## Collation item `DocPaper`
 
-itemnm1 = 'TestPaper'
+itemnm1 = 'DocPaper'
 item1 = COLLATED[itemnm1]
 
 print(f"KEYS IN ITEM `{itemnm1}`")

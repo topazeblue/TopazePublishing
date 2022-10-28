@@ -1,19 +1,17 @@
-tags: TestPaper
+tags: DocPaper
 
-version:  "0.0"
-date:     "13 Oct 2022"
+version:  "1.0"
+date:     "28 Oct 2022"
 
-title:        Topaze Blue Advisory
-subtitle:     Advising on anything Defi
+title:        Topaze Publishing
+subtitle:     A Python / Pandoc based publishing system
 abstract: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae fringilla
-  eros. Vivamus iaculis mauris vitae turpis porta gravida. Donec sed odio
-  ullamcorper, vehicula orci vitae, pretium nibh. Etiam condimentum rutrum
-  blandit. Ut nec maximus nisi. Nunc porta arcu ac lacus ultricies, vitae
-  finibus velit accumsan. Vivamus ut diam nisl. Curabitur feugiat laoreet est,
-  ut luctus velit semper feugiat. Suspendisse sed velit commodo, fermentum magna
-  eget, posuere ante. Sed in ullamcorper erat. Donec porttitor purus vitae elit
-  egestas scelerisque. Pellentesque in nulla nibh.
+  Topaze Publishing ("TP") is a collection of Python libraries destined to create
+  beautiful and modular papers, mostly from augmented markdown sources, ie markdown 
+  files with a yaml header for metadata. The python libraries mostly deal with the 
+  creation of the aggregated and augmented markdown file, and possibly its conversion
+  to html. They then invoke pandoc for conversion into other formats, including Word,
+  LaTeX and ultimately pdf.
 
 authors:
   - name:     Stefan Loesch
@@ -22,7 +20,7 @@ authors:
     email:    oscar@topaze.blue
 
 copyright:    Copyright (c) TopazeBlue 2022. All rights reserved.
-canonicurl:   https://tocom.com
+canonicurl:   https://github.com/topazeblue/TopazePublishing
 
 moredata:
   lorem: 1

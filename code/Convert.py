@@ -18,8 +18,8 @@ from convertlib import *
 from convertlib import __VERSION__, __DATE__
 from IPython.display import HTML
 STARTT = recordtime()
-__VERSION_J__ = "1.0"
-__VERSION_DT_J__ = "27/Oct/2022"
+__VERSION_J__ = "1.0.1"
+__VERSION_DT_J__ = "28/Oct/2022"
 
 # # TopazePublishing Convert (Demo)
 
@@ -30,10 +30,10 @@ print ("[convert]", __VERSION_J__, __VERSION_DT_J__)
 # ## Key data
 
 # ### Select items to include in the run
-# The `ITEMS` list contains all the documents that are being processed in this script (for a file to be processed with eg within the `TestPaper` item it must have `TestPaper` within its tags. A file can be processed in multiple papers. Note that even files that do not have the right tags are individually processed and are part of the `COLLECTION`, they are just not part of the `COLLATED` object. The `LATEXITEMS` list is the list of items for which LaTeX is run. If this list is empty, not LaTeX is run (LaTeX is somewhat slow...).
+# The `ITEMS` list contains all the documents that are being processed in this script (for a file to be processed with eg within the `DocPaper` item it must have `DocPaper` within its tags. A file can be processed in multiple papers. Note that even files that do not have the right tags are individually processed and are part of the `COLLECTION`, they are just not part of the `COLLATED` object. The `LATEXITEMS` list is the list of items for which LaTeX is run. If this list is empty, not LaTeX is run (LaTeX is somewhat slow...).
 
 ITEMS = [
-    "TestPaper",     # some testing and demo stuff, no real content
+    "DocPaper",       # some testing and demo stuff, no real content
     #"WIP",           # Work In Progress (the section currently being worked on)
 ]
 ITEMS
@@ -193,10 +193,10 @@ for item in ITEMS:
 COLLATED.keys()
 
 # +
-#print(COLLATED["TestPaper"]["MD"])
+#print(COLLATED["DocPaper"]["MD"])
 
 # +
-#COLLATED["TestPaper"]["DATA"]
+#COLLATED["DocPaper"]["DATA"]
 # -
 
 # #### Template evaluation and text collation
@@ -378,9 +378,10 @@ os.chdir(SCRIPTPATH)
 import re
 import pandas as pd
 
-for fname in ["TestPaper.tex"]:
-
+for fname0 in ITEMS:
+    
     # Read the tex file and create list of all charts
+    fname = f"{fname0}.tex"
     TEXDATA = fload(fname, OUTPATH)
     match = re.findall("^(.includegraphics(.*){_img/(.*)})", TEXDATA, flags=re.MULTILINE)
     match = {r[2]: r for r in match}
@@ -396,8 +397,8 @@ for fname in ["TestPaper.tex"]:
     # Save the file back
     fsave(TEXDATA, fname, OUTPATH)
     os.chdir(OUTPATH) 
-    # #!/Library/TeX/texbin/pdflatex PurplePaper.tex >/dev/null
-    # !/Library/TeX/texbin/pdflatex {fname}
+    # !/Library/TeX/texbin/pdflatex {fname} >/dev/null
+    # #!/Library/TeX/texbin/pdflatex {fname}
     os.chdir(SCRIPTPATH) 
 
 
@@ -407,7 +408,7 @@ for fname in ["TestPaper.tex"]:
 
 recordtime(STARTT, "cleanup")
 
-if 0:
+if 1:
     # !rm {OUTPATH}/*.aux
     # !rm {OUTPATH}/*.out
     # !rm {OUTPATH}/*.toc

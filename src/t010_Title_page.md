@@ -1,4 +1,4 @@
-tags: TestPaper
+tags: DocPaper
 
 istemplate:     true
 notex:          true

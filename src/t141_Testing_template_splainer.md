@@ -1,4 +1,4 @@
-tags: TestPaper
+tags: DocPaper
 
 ---
 
@@ -14,7 +14,7 @@ Before we can understand templates, we need to understand what data is, and how 
 
 For _regular files_ (markdown etc), metadata is all data in the preamble yaml section, _except_ the items that hang under the `data` entry itself: all those are considered data. For example the preamble of this file is as follows
 
-    tags: TestPaper
+    tags: DocPaper
 
     istemplate: true
 
@@ -29,7 +29,7 @@ The items `tags`, `istemplate` and `localmeta1/2` are metadata, with the first t
 
 In _data file_ (yaml extension), all data is considered data and aggregated globally. For example below are the data items of this document that, as we can see, contain information like the title and subtitle as well as version and date
 
-    tags: TestPaper
+    tags: DocPaper
 
     version:  "0.0"
     date:     "13 Oct 2022"
@@ -40,8 +40,6 @@ In _data file_ (yaml extension), all data is considered data and aggregated glob
 Note that technically the data for data files is also considered its meta data as we see above with the data item `tags`. This is somewhat inelegant as this means that the metadata of data files is also subject to aggregation, but in the grand scheme of things we do not care enough to change it.
 
 ### Data aggregation
-
-
 
 A final word on **data aggregation**: the way it works is that data is collected in a single dict, starting from the front of the document and working one's way through to the back. To the extent that there are no duplicate keys this does not matter, but if there are the later data replaces the earlier one. For structured data the result is undefined. What we mean with this is the following. Consider the following data in file 1
 

@@ -1,4 +1,4 @@
-tags: TestPaper
+tags: DocPaper
 
 istemplate: true
 
@@ -13,6 +13,16 @@ data:
 
 # Working with templates
 
+In this file we are working with templates. For this to work we need `istemplate: true`. 
+The metadata section of this file reads as follows
+
+  localmeta1: my local meta data item 1
+  localmeta2: my local meta data item 2
+
+  data:
+    localdata1: my local data item 1
+    localdata2: my local data item 2
+    
 ## Example template evaluations
 
 - **localmeta1** from local meta data "{_m[localmeta1]}" (it does **not** appear in the global data!)
