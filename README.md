@@ -18,9 +18,38 @@
 - `out`:        generated outputs (mostly excluded from repo)
 - `final`:      final versions of outputs (copied there manually)
 
-## Instructions
+## How to create your own document
 
-### Requirements
+1. Create one or multiple source files with your markdown content in `src`; see 
+the examples files in that directory for structure and features you can use
+
+2. Add the appropriate tag to the `tags` field in the file metadata; we here assume
+you chose `tags: MyDocument`, so _MyDocument_ is the name of your document
+
+3. Launch a Jupyter session in the browser by running `jupyter notebook`; do not run Jupyter in an IDE like VSCode as it may not integrate jupytext and therefore not keep the `.py` and `.ipynb` files in synch
+
+4. Open the `Convert.py` Jupyter notebook and add `"MyDocument"` to the `ITEMS` definion. It will then read 
+
+        ITEMS = [
+            "DocPaper",
+            "MyDocument",
+            #"WIP", 
+        ]
+    meaning that it will produce two documents, _DocPaper_ and _MyDocument_.
+
+5. Run the `code/Convert.py` notebook from the Jupyter environment with jupytext installed. Do _not_ run it inside a regular Python environment using `python3 Convert.py` as this will not run the `!command` statements
+
+6. The output will be in `out`. You will at least find the following files there
+
+    - `MyDocument.pdf`: the LaTeX pdf
+    - `MyDocument.docx`: the Word document
+    - `MyDocument.md`: the processed and collated markdown file
+    - `MyDocument.tex`: the complete LaTeX source file
+
+7. Files in the `out` directory are excluded from the repo in the `.gitignore`, but you can copy them to the `final` directory and check them in there
+
+
+## Requirements
 
 (see `code/Versions.py` or associated ipynb)
 

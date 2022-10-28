@@ -1,6 +1,5 @@
 __pycache__/*
 *.pyc
 out/*
-*.pdf
 *.ipynb
 .DS_Store
