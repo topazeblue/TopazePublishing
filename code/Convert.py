@@ -408,7 +408,7 @@ for fname0 in ITEMS:
 
 recordtime(STARTT, "cleanup")
 
-if 1:
+if 0:
     # !rm {OUTPATH}/*.aux
     # !rm {OUTPATH}/*.out
     # !rm {OUTPATH}/*.toc
