@@ -56,9 +56,8 @@
   \texttt{{\href{{mailto:{d[authors][1][email]} }}{{ {d[authors][1][email]} }} }}
 }}
 
-\affil{{  \href{{ {d[sponsor][url]} }}{{ {d[sponsor][name]} }}  }}
-%\date{{}} % Activate to display a given date or no date (if empty),
-         % otherwise the current date is printed 
+\affil{{  \href{{https://{d[sponsor][url]}}}{{{d[sponsor][name]}}}  }}
+\date{{ {d[date]} }}
 
 \setlength{{\parindent}}{{0pt}}
 
@@ -67,7 +66,9 @@
 \maketitle
 
 \begin{{abstract}}
-   {d[abstract]}
+   {d[abstract]} \\ \\ 
+   \copyright\ Copyright {d[copyright]}. \\ \\ 
+   \href{{https://{d[canonicurl]}}}{{{d[canonicurl]}}}
 \end{{abstract}}
 
 \pagebreak
