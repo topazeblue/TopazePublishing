@@ -9,12 +9,13 @@ CONVERTLIB -- conversion lib for markdown documents
 - v1.3.1: record execution time
 - v1.3.2: improved tex conversion, allowing for notex flag
 - v1.3.3: ttags
+- v1.3.4: texalt
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
 :canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/convertlib.py
 """
-__VERSION__ = "1.3.3+"
-__DATE__ = "28/Oct/2022"
+__VERSION__ = "1.3.4"
+__DATE__ = "17/Nov/2022"
 
 
 from fls import *
@@ -131,6 +132,20 @@ def is_valid_src(fn):
 
 
 ##############################################################################
+## REMOVE TODOS
+def remove_todos(md):
+    """
+    removes all todos - DEPRECATED
+
+    SUPERSEDED BY REMOVETAGS IN CONTEXT; WILL BE REMOVED
+
+    :RETURNS:   md with TODOs removed
+                TODOs start with TODO, are in caps and contain at most " -,;"
+    """
+    md1 = re.sub("TODO[ 0-9A-Z\-,;!\?_\/]*", "", md)
+    return md1
+
+##############################################################################
 ## DECREASE HEADING LEVEL
 def decrease_heading_level(md):
     """
@@ -206,7 +221,7 @@ def process_srcdata(srcdata, fn, ffn, context=None):
     *context dict
     :mdfilters:     a list of filter functions f(md) -> md to be applied to the markdown
     :nohtml:        if existing and True, do not produce html at the per-file level
-    :notext:        if existing and True, do not produce TeX at the per-file level
+    :notex:         if existing and True, do not produce TeX at the per-file level
     """
     #print("[process_srcdata] context", context)
     if context is None: context = dict()
@@ -233,17 +248,29 @@ def process_srcdata(srcdata, fn, ffn, context=None):
     else:
         meta = dict()
 
-    ###################################################
-    # FTYPE == MD
     if result["ftype"] == "md":
         print ("[process_srcdata] converting to markdown", fn)
         result["md"], result["meta"]["ttags"] = _process_md(result["body"], result["meta"], context)
         result["html"] = markdown.markdown(result["md"]) if producehtml else "<!-- ### NOHTML ### -->"
 
-        if not meta.get("notex"):
-            # if the file meta data contains a true'ish "notex" item then not tex outout is produced
+        if meta.get("texalt"):
+            # if the field `texalt` is given then this is taken as the tex content of this file; no other
+            # tex content is produced, ie the md content is entirely discarded
+            #
+            # For example, to start the appendix, one can use
+            # texalt: |
+            #     \pagebreak
+            #     \section*{Appendix}
+            #     \appendix
+            result["tex"] = meta.get("texalt")
+            result["texrh"] = meta.get("texalt")
+            
+        if not meta.get("notex") and not meta.get("texalt"):
+            # if the file meta data contains a true'ish `notex`` item then not tex outout is produced
             # for this particular file; this is particularly relevant for the title page, as titles
-            # in latex are handled differently than in markdown
+            # in latex are handled differently than in markdown; similarly if there is a `texalt`
+            # field then this is used as the actual tex content and the md content is not used to
+            # generate tex
             #
             # if the context contains a true'ish item then this indicates that we do not need per-file
             # tex output (because we convert the whole shebang at the end for example); in this case 
@@ -253,7 +280,7 @@ def process_srcdata(srcdata, fn, ffn, context=None):
         
         #print("[process_srcdata] converting to TeX", result["md"], result["tex"])
         
-    # FTYPE == HTML
+
     elif result["ftype"] == "html":
         print ("[process_srcdata] copying html", fn)
         #result["md"] = "\n\n\tNOT CONVERTED: |{}|\n\n".format(fn)
@@ -263,7 +290,6 @@ def process_srcdata(srcdata, fn, ffn, context=None):
         result["tex"] = run_pandoc(result["html"], frmfmt="html", tofmt="latex")
         result["texrh"] = result["tex"]
     
-    # FTYPE == YAML
     elif result["ftype"] == "yaml":
         print ("[process_srcdata] processing yaml", fn)
         meta, md, html, tex = _process_yaml(result["body"], fn, ffn, context)
@@ -273,22 +299,16 @@ def process_srcdata(srcdata, fn, ffn, context=None):
         result["tex"] = tex
         result["texrh"] = result["tex"]
 
-
-    ###################################################
-    # META contains PAGEBREAK or BREAKBEFORE
     if result["meta"].get("pagebreak") or result["meta"].get("breakbefore"):
         result["md"] = WT.pagebreak() + result["md"]
         result["tex"] = "\pagebreak\n\n" + result["tex"]
         result["texrh"] = result["tex"]
 
-    # META contains BREAKAFTER
     if result["meta"].get("breakafter"):
         result["md"] = result["md"] + WT.pagebreak()
         result["tex"] = result["tex"] + "\n\pagebreak\n\n"
         result["texrh"] = result["tex"]
 
-    ###################################################
-    # DATA
     data = result["meta"].get("data")
     if not data is None:
         if not isinstance(data, dict):
@@ -351,8 +371,8 @@ _({r[Description]})_
 [telegram]({r[Telegram]}) 
 [coingecko]({r[CoinGecko]}) 
 
+                
 """
-
 
 def _process_yaml(yamldata, fn, ffn, context):
     """
@@ -372,7 +392,7 @@ def _process_yaml(yamldata, fn, ffn, context):
 
     type = meta.get("type", None)
 
-    # TYPE == XLSTABLE, LINKTABLE, REFTABLE
+    ## XLSTABLE, LINKTABLE
     if type in ["xlstable", "linktable", "reftable"]:
         path, _ = os.path.split(ffn)
         if meta.get("table") is None:
@@ -395,7 +415,7 @@ def _process_yaml(yamldata, fn, ffn, context):
             l2 = [("|").join([""]+list(str(x) for x in r[1])+[""]) for r in df.iterrows()]
             l = [l0]+[l1]+l2
             md = "\n".join(l)
-        
+
         ## LINKTABLE (table, lttag)
         elif type == "linktable":
             lttag = meta.get("lttag", "ol")
@@ -415,7 +435,7 @@ def _process_yaml(yamldata, fn, ffn, context):
             html = "<{1}>{0}</{1}>".format(html0, "ol")
             md = "\n".join('{tag} **[{r[Ref]}]** {r[fAuthors]}:  _"{r[fTitle]}"_  ({r[fPublication]}, {r[fYear]}) [url]({r[fURL]}) [pdf]({r[fURLpaper]})'.format(r=r, tag=rttagmd) for r in dctlst if not r["Exclude"] == "x")
 
-    # TYPE == SECTION, CHAPTER
+    ## SECTION, CHAPTER
     elif type in ["section", "chapter"]:
         heading, htag = ("#", "Section: ") if type == "section" else ("##", "")
         md = "\n{} {}{}\n\n".format(heading, htag, meta.get("title", "TITLE MISSING"))
@@ -423,7 +443,7 @@ def _process_yaml(yamldata, fn, ffn, context):
             md += ">{}\n\n".format(meta.get("summary"))
         html = None
 
-    # TYPE == TITLE
+    ## TITLE
     elif type in ["title"]:
         
         md = "{}".format(WT.title(meta.get("title", "==TITLE MISSING==")))
@@ -446,8 +466,6 @@ def _process_yaml(yamldata, fn, ffn, context):
         md += "\n\nTOC\n\n"
         md += WT.pagebreak()
         html = None
-
-    # TYPE == DATA
     elif type in ["data"] or type is None:
         # we accept data both in the root level of the meta dict as well as under the
         # data key; type can be set to data, or it can be missing
