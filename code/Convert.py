@@ -18,10 +18,10 @@ from convertlib import *
 from convertlib import __VERSION__, __DATE__
 from IPython.display import HTML
 STARTT = recordtime()
-__VERSION_J__ = "1.0.1"
-__VERSION_DT_J__ = "28/Oct/2022"
+__VERSION_J__ = "1.1"
+__VERSION_DT_J__ = "21/Dec/2022"
 
-# # TopazePublishing Convert (Demo)
+# # TopazePublishing Convert
 
 print("[convertlib]", __VERSION__, __DATE__)
 print ("[convert]", __VERSION_J__, __VERSION_DT_J__)
@@ -33,8 +33,9 @@ print ("[convert]", __VERSION_J__, __VERSION_DT_J__)
 # The `ITEMS` list contains all the documents that are being processed in this script (for a file to be processed with eg within the `DocPaper` item it must have `DocPaper` within its tags. A file can be processed in multiple papers. Note that even files that do not have the right tags are individually processed and are part of the `COLLECTION`, they are just not part of the `COLLATED` object. The `LATEXITEMS` list is the list of items for which LaTeX is run. If this list is empty, not LaTeX is run (LaTeX is somewhat slow...).
 
 ITEMS = [
-    "DocPaper",       # some testing and demo stuff, no real content
-    #"WIP",           # Work In Progress (the section currently being worked on)
+    #"DocPaper",                    # some testing and demo stuff, no real content (`t_`)
+    "AMMBlackScholesPaper",         # AMM Black Scholes paper (Dec 2022, `ammbs_`)
+    #"WIP",                         # Work In Progress (the section currently being worked on)
 ]
 ITEMS
 
@@ -107,13 +108,9 @@ print("SRCIMGPATH", SRCIMGPATH)
 # clean up the area to which output files are written
 
 # #!ls {OUTPATH}
-# !rm {OUTPATH}/*
-
-# +
-# clean up the output area where images are being found (they'll be copied there again below)
-
-# #!ls {OUTIMGPATH}
-# !rm {OUTIMGPATH}/*
+# !rm -f {OUTPATH}/*
+# !mkdir {OUTPATH}/_img
+# !mkdir {OUTPATH}/_arxiv
 
 # +
 # # copy images from the source image area to the image area in the outputs
