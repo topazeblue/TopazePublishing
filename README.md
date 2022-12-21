@@ -1,5 +1,9 @@
 # Topaze Publishing
 
+_find the [TopazePublishing][topazepub] framework on Github_
+
+[topazepub]:https://github.com/topazeblue/TopazePublishing
+
 ## Getting Started
 
 - Check out the dependencies below; most are pretty standard, but you may need [jupytext][jupytext] and [markdown][markdown] as pip installs
