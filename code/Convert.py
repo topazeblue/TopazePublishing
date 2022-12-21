@@ -362,6 +362,7 @@ for item in LATEXITEMS:
     texcontent  = fload(f"{item}.collation.tex", OUTPATH)        # collated from invidual tex fields
     #texcontent  = fload(f"{item}.md.tex", OUTPATH)              # generated from the markdown file
     texfulldoc  = template.format(body=texcontent, d=texdata)
+    texfulldoc  = numbered_eqns_filter(texfulldoc, True)         # replace /[ -> /begin{equation}
     fsave(texfulldoc, f"{item}.tex", OUTPATH)
 #print(texfulldoc)
 

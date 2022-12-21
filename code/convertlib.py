@@ -4,18 +4,19 @@ CONVERTLIB -- conversion lib for markdown documents
 
 :VERSION HISTORY:
 
-- v1.2: added context object and mdfilters (to be currently used with the formulas and wordtag objects)
-- v1.3: added template evaluation; also notex flag in context
-- v1.3.1: record execution time
-- v1.3.2: improved tex conversion, allowing for notex flag
-- v1.3.3: ttags
-- v1.3.4: texalt
+- v1.2:     added context object and mdfilters (to be currently used with the formulas and wordtag objects)
+- v1.3:     added template evaluation; also notex flag in context
+- v1.3.1:   record execution time
+- v1.3.2:   improved tex conversion, allowing for notex flag
+- v1.3.3:   ttags
+- v1.3.4:   texalt
+- v1.3.5:   numbered_eqns_filter
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
 :canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/convertlib.py
 """
-__VERSION__ = "1.3.4"
-__DATE__ = "17/Nov/2022"
+__VERSION__ = "1.3.5"
+__DATE__ = "21/Nov/2022"
 
 
 from fls import *
@@ -29,14 +30,17 @@ from collections import ChainMap
 
 import re
 import markdown
-#import yaml as _yaml
 import pandas as pd
 import string as _string
 import random as _random
 from datetime import datetime as _dt
 
-#import numpy as _np
-
+#
+# FUTURE WORK
+# - add proper equation numbering with labelling at the equation level; this can either
+#   be done [with pandoc][pdeq] or manually, eg file:number or eqnhash
+# 
+# [pdeq]:https://tex.stackexchange.com/questions/111868/pandoc-how-can-i-get-numbered-latex-equations-to-show-up-in-both-pdf-and-html-o  
 
 ##############################################################################
 ## PATH
@@ -321,7 +325,6 @@ def process_srcdata(srcdata, fn, ffn, context=None):
 
 ##############################################################################
 ## PROCESS YAML
-
 def _isin(thekey, thedict):
     """
     returns True iff thekey is in thedict and is not None
@@ -547,6 +550,25 @@ def evaltemplate(md, fn, meta, ldata, data):
     result = md.format(_d=data, _m=meta, _ld=ldata, _fn=fn, **data)
     #print("[evaluatetemplate] result\n", result)
     
+    return result
+
+
+##############################################################################
+## NUMBERED EQNS FILTER
+def numbered_eqns_filter(texin, enable=True):
+    """
+    converts a latex document from unnumbered -> numbered equations
+    
+    :texin:      the latex with unnumbered equations
+    :enable:     if False, the filter is disabled and the return value is `texin`
+    :returns:    the latex with numbered equations
+    
+    NOTE: this is a simple global replace `\[` -> `\\begin{equation}` and `\]` -> `\end{equation}`
+    """
+    result = texin
+    if enable:
+        result = result.replace('\[', '\\begin{equation}')
+        result = result.replace('\]', '\\end{equation}')
     return result
 
 
