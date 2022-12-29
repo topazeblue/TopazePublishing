@@ -11,12 +11,13 @@ CONVERTLIB -- conversion lib for markdown documents
 - v1.3.3:   ttags
 - v1.3.4:   texalt
 - v1.3.5:   numbered_eqns_filter
+- v1.3.6:   check_prefix
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
 :canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/convertlib.py
 """
-__VERSION__ = "1.3.5"
-__DATE__ = "21/Nov/2022"
+__VERSION__ = "1.3.6"
+__DATE__ = "29/Dec/2022"
 
 
 from fls import *
@@ -666,3 +667,19 @@ def recordtime(startt=None, stage=None):
         exect = currentt - startt
         print(f'EXECUTION TIME ({stage}) -- {exect:4.1f}s')
         return exect
+
+
+def check_prefix(fn, prefixes):
+    """
+    checks whether prefix of file is in prefix set
+    
+    :fn:          the filename
+    :prefixes:    an iterable of included prefixes
+    :returns:     True if fn has one of the prefixes, False else
+    """
+    for pf in prefixes:
+        if fn[:len(pf)] == pf:
+            return True
+    return False
+#assert check_prefix("test_file", ["test_", "bla_"]) == True      
+#assert check_prefix("tst_file", ["test_", "bla_"]) == False    
