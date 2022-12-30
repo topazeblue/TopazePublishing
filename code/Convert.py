@@ -14,17 +14,22 @@
 #     name: python3
 # ---
 
+# +
 from convertlib import *
 from convertlib import __VERSION__, __DATE__
 from IPython.display import HTML
-STARTT = recordtime()
-__VERSION_J__ = "1.1"
-__VERSION_DT_J__ = "21/Dec/2022"
-
-# # TopazePublishing Convert
+__VERSION_J__ = "1.1.1"
+__VERSION_DT_J__ = "30/Dec/2022"
 
 print("[convertlib]", __VERSION__, __DATE__)
 print ("[convert]", __VERSION_J__, __VERSION_DT_J__)
+# -
+
+# # TopazePublishing Convert
+
+# !pwd
+
+recordtime(init=True)
 
 
 # ## Key data

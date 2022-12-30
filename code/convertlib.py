@@ -12,12 +12,13 @@ CONVERTLIB -- conversion lib for markdown documents
 - v1.3.4:   texalt
 - v1.3.5:   numbered_eqns_filter
 - v1.3.6:   check_prefix
+- v1.3.7:   record_time
 
 :copyright:     (c) Copyright Stefan LOESCH / topaze.blue 2022; ALL RIGHTS RESERVED
 :canonicurl:    https://github.com/topazeblue/TopazePublishing/blob/main/code/convertlib.py
 """
-__VERSION__ = "1.3.6"
-__DATE__ = "29/Dec/2022"
+__VERSION__ = "1.3.7"
+__DATE__ = "30/Dec/2022"
 
 
 from fls import *
@@ -642,8 +643,8 @@ def run_pandoc(docin, frmfmt=None, tofmt=None):
 
 ##############################################################################
 ## RECORDTIME
-import time
-def recordtime(startt=None, stage=None):
+import time as _time
+def recordtime(stage=None, init=False):
     """
     records the time (printing it out)
     
@@ -652,23 +653,28 @@ def recordtime(startt=None, stage=None):
     
     USAGE
     
-        STARTT = recordtime()
+        recordtime(init=True)
         ...
-        recordtime(STARTT, "intermediate")
-        ...
-        recordtime(STARTT)
+        recordtime("<stagename>")
+        or
+        recordtime()
     """
-    currentt = time.time()
-    if stage is None: stage="final"
-    if startt is None:
-        print(f'EXECUTION TIME -- Starting recording')
-        return currentt
-    else:
-        exect = currentt - startt
-        print(f'EXECUTION TIME ({stage}) -- {exect:4.1f}s')
-        return exect
+    if not '_RECORDTIME_STARTT' in globals():
+        init = True
+    if init:
+        print(f'[recordtime] -- Starting recording time')
+        global _RECORDTIME_STARTT
+        _RECORDTIME_STARTT = _time.time()
+        return
+
+    exect = _time.time() - _RECORDTIME_STARTT
+    stage = f" [{stage}]" if stage else ""
+    print(f'[recordtime] -- {exect:4.1f}s{stage}')
+    return exect
 
 
+##############################################################################
+## CHECK PREFIX
 def check_prefix(fn, prefixes):
     """
     checks whether prefix of file is in prefix set
