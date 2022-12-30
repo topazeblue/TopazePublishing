@@ -94,7 +94,7 @@ CONTEXT["mdfilters"] = [FORMULAS, WORDTAGS]
 #
 # Note that the cleanup operations take about 1.5 seconds on a Mac. If all the directory listings are enabled that adds another 2.5 second to the execution time.
 
-recordtime(STARTT, "setup")
+recordtime("setup")
 
 # +
 ##if RUNTEMPLATES:
@@ -131,7 +131,7 @@ print("SRCIMGPATH", SRCIMGPATH)
 
 # ## Read and process source files
 
-recordtime(STARTT, "file list")
+recordtime("file list")
 
 # ### Create sorted file list and filter by prefix
 
@@ -146,7 +146,7 @@ print(src_filenames.keys())
 # ### Read and process the files
 # (all stored into `COLLECTION` dict)
 
-recordtime(STARTT, "read and process files")
+recordtime("read and process files")
 
 COLLECTION = {}
 for fn,ffn in src_filenames.items():
@@ -175,7 +175,7 @@ ttags_l
 
 # ### Collation
 
-recordtime(STARTT, "collate files")
+recordtime("collate files")
 
 # The `COLLATED` variable will contain all the collations related to text items. It is an array of arrays where the first index is the item (eg "PurplePaper") and the second index is the content type (eg "HTML"). The different items are in `ITEMS`.
 #
@@ -236,7 +236,7 @@ for item in ITEMS:
 
 # ## Save
 
-recordtime(STARTT, "save")
+recordtime("save")
 
 # ### Save structures
 
@@ -266,7 +266,7 @@ for item in COLLATED.keys():
 
 # ### Invoke pandoc
 
-recordtime(STARTT, "pandoc")
+recordtime("pandoc")
 
 os.chdir(OUTPATH) 
 
@@ -308,7 +308,7 @@ os.chdir(SCRIPTPATH)
 #
 # Note: this code needs to run after pandoc. This means it will not work if the notebook is run as Python script unless we at least run the pandoc TeX conversion in a manner that does not depend on notebook eval.
 
-recordtime(STARTT, "tex")
+recordtime("tex")
 
 # +
 #import re as _re
@@ -420,7 +420,7 @@ for fname0 in ITEMS:
 #
 # Note: this takes almost 2 seconds to run! Only do that when freezing a version to not have to manually remove the files.
 
-recordtime(STARTT, "cleanup")
+recordtime("cleanup")
 
 if 0:
     # !rm {OUTPATH}/*.aux
@@ -434,11 +434,10 @@ if 0:
 #
 # There are numerous timing stages along the way.
 
-recordtime(STARTT)
+recordtime()
 
 # ## Open
 
+ITEMS_l = list(ITEMS)
 if 1:
-    # !open {OUTPATH}/{ITEMS[0]}.pdf
-
-
+    # !open {OUTPATH}/{ITEMS_l[0]}.pdf
